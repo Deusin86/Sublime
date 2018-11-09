@@ -13,6 +13,7 @@
 <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
 <link rel="stylesheet" type="text/css" href="styles/product.css">
 <link rel="stylesheet" type="text/css" href="styles/product_responsive.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
 
@@ -98,7 +99,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<!-- Search Panel -->
 		<div class="search_panel trans_300">
 			<div class="container">
@@ -130,7 +131,7 @@
 	<div class="menu menu_mm trans_300">
 		<div class="menu_container menu_mm">
 			<div class="page_menu_content">
-							
+
 				<div class="page_menu_search menu_mm">
 					<form action="#">
 						<input type="search" required="required" class="page_menu_search_input menu_mm" placeholder="Search for products...">
@@ -174,7 +175,7 @@
 			</ul>
 		</div>
 	</div>
-	
+
 	<!-- Home -->
 
 	<div class="home">
@@ -215,61 +216,110 @@
 				</div>
 
 				<!-- Product Content -->
-				<div class="col-lg-6">
-					<div class="details_content">
-						<div class="details_name">Smart Phone</div>
-						<div class="details_discount">$890</div>
-						<div class="details_price">$670</div>
+				<?php
+				include 'ligacao/conn.php';
+				$idx = $_GET['produto'];
+				$dados = (mysqli_query($conn,"SELECT id_produto, categoria, nome, preco_mercado, desconto, quantidade, descricao FROM produtos where id_produto like '$idx'"));
+				$informacao = $dados->fetch_assoc();
 
-						<!-- In Stock -->
-						<div class="in_stock_container">
-							<div class="availability">Availability:</div>
-							<span>In Stock</span>
-						</div>
-						<div class="details_text">
-							<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Phasellus id nisi quis justo tempus mollis sed et dui. In hac habitasse platea dictumst. Suspendisse ultrices mauris diam. Nullam sed aliquet elit. Mauris consequat nisi ut mauris efficitur lacinia.</p>
-						</div>
+			if($informacao['quantidade']>0){
+				$disponibilidade="Disponivel";
+				echo'
+						<style>
+							.teste{
+								color:  #00cc00;
+							}
+						</style>
+						<script>
+						$(document).ready(function(){
+							 $("#comprar").show();
+						});
+						</script>';
+			}else{
+				$disponibilidade="Indisponivel";
+					echo '
+							<style>
+							 	.teste{
+							 		color: red;
+								}
+							</style>
 
-						<!-- Product Quantity -->
-						<div class="product_quantity_container">
-							<div class="product_quantity clearfix">
-								<span>Qty</span>
-								<input id="quantity_input" type="text" pattern="[0-9]*" value="1">
-								<div class="quantity_buttons">
-									<div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fa fa-chevron-up" aria-hidden="true"></i></div>
-									<div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fa fa-chevron-down" aria-hidden="true"></i></div>
-								</div>
-							</div>
-							<div class="button cart_button"><a href="#">Add to cart</a></div>
-						</div>
+							<script>
+							$(document).ready(function(){
+								 $("#comprar").hide();
+							});
+							</script>';
 
-						<!-- Share -->
-						<div class="details_share">
-							<span>Share:</span>
-							<ul>
-								<li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-								<li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-								<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-								<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
+			}
+
+				if(!$dados)
+				include 'ligacao/desconn.php';
+
+				echo '
+
+								<div class="col-lg-6">
+									<div class="details_content">
+										<div class="details_name">'.$informacao['nome'].'</div>
+										<div class="details_discount">'.$informacao['desconto'].'</div>
+										<div class="details_price">'.$informacao['preco_mercado'].'</div>
+
+										<!-- In Stock -->
+										<div class="in_stock_container">
+											<div class="availability">Availability:</div>
+											<span class="teste">'.$disponibilidade.'</span>
+
+										</div>
+										<div class="details_text">
+											<p>'.$informacao['descricao'].'</p>
+										</div>
+
+										<!-- Product Quantity -->
+										<div id="comprar" class="product_quantity_container">
+											<div class="product_quantity clearfix">
+												<span>Qty</span>
+												<input id="quantity_input" type="text" pattern="[0-9]*" value="1">
+												<div class="quantity_buttons">
+													<div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fa fa-chevron-up" aria-hidden="true"></i></div>
+													<div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fa fa-chevron-down" aria-hidden="true"></i></div>
+												</div>
+											</div>
+											<div class="button cart_button"><a href="#">Add to cart</a></div>
+										</div>
+
+										<!-- Share -->
+										<div class="details_share">
+											<span>Share:</span>
+											<ul>
+												<li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+												<li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+												<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+												<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+											</ul>
+										</div>
+									</div>
+								</div>';
+
+				 ?>
+
 			</div>
-
 			<div class="row description_row">
 				<div class="col">
 					<div class="description_title_container">
-						<div class="description_title">Description</div>
-						<div class="reviews_title"><a href="#">Reviews <span>(1)</span></a></div>
+						<div class="description_title">Descrição</div>
+						<div class="reviews_title"><a href="#" >Comentários<span>(1)</span></a></div>
 					</div>
-					<div class="description_text">
-						<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Phasellus id nisi quis justo tempus mollis sed et dui. In hac habitasse platea dictumst. Suspendisse ultrices mauris diam. Nullam sed aliquet elit. Mauris consequat nisi ut mauris efficitur lacinia.</p>
+					<?php
+					echo '<div class="description_text">
+						<p>'.$informacao['descricao'].'</p>
 					</div>
+					 ';?>
+
 				</div>
 			</div>
 		</div>
 	</div>
+
+
 
 	<!-- Products -->
 
@@ -282,7 +332,7 @@
 			</div>
 			<div class="row">
 				<div class="col">
-					
+
 					<div class="product_grid">
 
 						<!-- Product -->
@@ -329,6 +379,7 @@
 		</div>
 	</div>
 
+
 	<!-- Newsletter -->
 
 	<div class="newsletter">
@@ -356,7 +407,7 @@
 	</div>
 
 	<!-- Footer -->
-	
+
 	<div class="footer_overlay"></div>
 	<footer class="footer">
 		<div class="footer_background" style="background-image:url(images/footer.jpg)"></div>

@@ -245,11 +245,11 @@
 						 			echo'
 							 <!-- Product -->
 							 <div class="product">
-								 <div class="product_image"><a href="product.html"><img src="images/product_10.jpg" alt=""></a></div>
+								 <div class="product_image"><a href="product.php?produto='.$informacao['id_produto'].'"><img src="images/product_10.jpg" alt=""></a></div>
 								 <div class="product_extra product_sale"><a href="categories.html">Hot</a></div>
 
 								 <div class="product_content">
-									 <div class="product_title"><a href="product.html">'.$informacao['nome'].'</a></div>
+									 <div class="product_title"><a href="product.php">'.$informacao['nome'].'</a></div>
 									 <div class="product_price">'.$informacao['preco_mercado'].'</div>
 								 </div>
 								 </div>';
