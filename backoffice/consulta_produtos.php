@@ -83,7 +83,7 @@ function tabelafil($query)
           <td>'.$emenu["quantidade"].'</td>
           <td>'.$emenu["descricao"].'</td>
 
-          <td><a href="editarfuncionarios.php?id='.$emenu['id_produto'].'"> Editar</button> </a> </td>
+          <td><a href="editar_produtos.php?id='.$emenu['id_produto'].'"> Editar</button> </a> </td>
           <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal'.$emenu["id_produto"].'">Apagar</button></td>
         </tr>';
         echo'
