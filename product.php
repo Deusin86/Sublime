@@ -16,7 +16,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-
 <div class="super_container">
 
 	<!-- Header -->
@@ -186,7 +185,7 @@
 					<div class="row">
 						<div class="col">
 							<div class="home_content">
-								<div class="home_title">Smart Phones<span>.</span></div>
+								<div class="home_title">Tecnologia<span>.</span></div>
 								<div class="home_text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a ultricies metus. Sed nec molestie eros. Sed viverra velit venenatis fermentum luctus.</p></div>
 							</div>
 						</div>
@@ -306,7 +305,7 @@
 				<div class="col">
 					<div class="description_title_container">
 						<div class="description_title">Descrição</div>
-						<div class="reviews_title"><a href="#" >Comentários<span>(1)</span></a></div>
+						<div class="reviews_title"><a href="#321">Comentários<span> (1)</span></a></div>
 					</div>
 					<?php
 					echo '<div class="description_text">
@@ -321,7 +320,7 @@
 
 
 
-	<!-- Products -->
+	<!-- Related Products -->
 
 	<div class="products">
 		<div class="container">
