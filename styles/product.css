@@ -1152,6 +1152,20 @@ section
 	font-weight: 500;
 	color: #1b1b1b;
 }
+
+.description_title a
+{
+	display: inline-block;
+	font-size: 24px;
+	font-weight: 500;
+	color: #6c6a74;
+}
+
+.description_title a:hover
+{
+	color: #1b1b1b;
+}
+
 .reviews_title
 {
 	display: inline-block;

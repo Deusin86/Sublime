@@ -1,7 +1,24 @@
+<?php
+	include 'ligacao/conn.php';
+	require_once 'funcoes/funcoes.php';
+
+	//$query_comments = mysqli_fetch_array(mysqli_query($conn,"SELECT count(*) FROM comentarios"));
+	$idx = $_GET['produto'];
+	$dados = (mysqli_query($conn,"SELECT count(id_comentario) as numero_comentarios FROM comentarios where id_produto like $idx"));
+	$query_comments = $dados->fetch_assoc();
+	//$comments=$query_comments["numero_comentarios"];
+	if(!$dados)
+	include 'ligacao/desconn.php';
+
+ ?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Product</title>
+<title>Productos</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="Sublime project">
@@ -14,6 +31,18 @@
 <link rel="stylesheet" type="text/css" href="styles/product.css">
 <link rel="stylesheet" type="text/css" href="styles/product_responsive.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+$(document).ready(function(){
+	 $("#reviews").hide();
+});
+
+$(document).ready(function(){
+	 $(".comment").hide();
+});
+
+</script>
+
 </head>
 <body>
 <div class="super_container">
@@ -307,16 +336,130 @@
 			<div class="row description_row">
 				<div class="col">
 					<div class="description_title_container">
-						<div class="description_title">Descrição</div>
-						<div class="reviews_title"><a href="#321">Comentários<span> (1)</span></a></div>
+					<div class="description_title"><a href="#descricao" onclick="return theFunction1();">Descrição</a>
+						<script>
+							function theFunction1(){
+								$(document).ready(function(){
+									 $("#reviews").hide();
+								});
+
+								$(document).ready(function(){
+									 $(".comment").hide();
+								});
+
+								$(document).ready(function(){
+									 $("#description").show();
+								});
+							}
+
+						</script>
+					</div>
+
+						<div class="reviews_title"><a href="#comentarios" onclick="return theFunction2();">Comentários
+						<span>
+						<?php echo'('.$query_comments['numero_comentarios'].')'; ?>
+						</span></a>
+
+							<script>
+								function theFunction2(){
+									$(document).ready(function(){
+										 $("#description").hide();
+									});
+
+									$(document).ready(function(){
+										 $("#reviews").show();
+									});
+
+									$(document).ready(function(){
+										 $(".comment").show();
+									});
+
+									<?php
+									$query = "SELECT produtos.id_produto,comentarios.comentario,comentarios.data,comentarios.nome,registo.nome FROM comentarios inner join registo on comentarios.nome=registo.id_registo inner join produtos on comentarios.id_produto=produtos.id_produto where comentarios.id_produto=$idx";
+									$search_result = tabelafil($query);
+
+									function tabelafil($query)
+									{
+										include 'ligacao/conn.php';
+										$resultados_fil = mysqli_query($conn,$query);
+										return $resultados_fil;
+
+									}
+
+									 ?>
+
+								}
+							</script>
+
+						</div>
+
 					</div>
 					<?php
-					echo '<div class="description_text">
+					echo '<div id="description" class="description_text">
 						<p>'.$informacao['descricao'].'</p>
 					</div>
 					 ';?>
 
+					 <form id="reviews" method="post">
+						 <br>
+						 <h3>Dê-nos a sua opnião !</h3>
+						 <div class="form-group">
+						 <label for="exampleInputEmail1">Nome</label>
+						 <input type="text" name="nome" class="form-control" aria-describedby="emailHelp">
+						 </div>
+
+					 		<div class="form-group">
+					 		<label for="exampleTextarea">Comentario</label>
+					 		<textarea class="form-control" name="comentario" rows="3"></textarea>
+					 		</div>
+
+					 		<div class="form-group">
+					 		<label for="exampleInputEmail1">Data</label>
+					 		<input type="date" class="form-control" name="data" aria-describedby="emailHelp">
+					 		</div>
+							<button type="submit" name="guardar" class="btn btn-success">Enviar !</button>
+							<br>
+							<br>
+							<br>
+					</form>
+
+					<?php
+					if(isset($_POST["guardar"])){
+						include 'ligacao/conn.php';
+						mysqli_query($conn,"INSERT INTO comentarios (id_produto, nome, comentario, data) VALUES ('11','$_POST[nome]','$_POST[comentario]','$_POST[data]')"); //BUUG HERE, nao adiciona !
+						echo '<meta http-equiv="refresh" content"=0;url=product.php">';
+						include 'ligacao/desconn.php';
+						}
+						?>
+
+				<?php
+				$comentarios_feitos=0;
+				while ($emenu = mysqli_fetch_array($search_result)) {
+				$comentarios_feitos++; //class"comment" é o formulario, com varios id e esconde lá em cima no script o formulario(comment) independetemente do id
+		 		echo'
+		 		<form id="$comentarios_feitos" class="comment">
+				<h3>Comentários Feitos</h3>
+		 		<div class="form-group">
+		 		<label for="exampleInputEmail1">Nome</label>
+		 		<input class="form-control"  value="'.$emenu['nome'].'">
+		 		</div>
+
+		 		<div class="form-group">
+		 		<label for="exampleTextarea">Comentário</label>
+		 		<textarea class="form-control">'.$emenu['comentario'].'</textarea>
+		 		</div>
+
+		 		<div class="form-group">
+		 		<label for="exampleInputEmail1">Data</label>
+		 		<input class="form-control" value="'.$emenu['data'].'">
+		 		</div>
+
+		 		</form>';
+	 			}
+	 	?>
+
 				</div>
+
 			</div>
 		</div>
 	</div>
