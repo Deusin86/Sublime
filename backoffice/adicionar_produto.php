@@ -104,6 +104,7 @@ include '../ligacao/conn.php';
 
 
         <button type="submit" name=enviar class="btn btn-primary">Adicionar !</button>
+          <a class="btn btn-primary" href="paineladmin.php" role="button">Voltar</a>
      </form>
 
   </body>
@@ -221,8 +222,11 @@ include '../ligacao/conn.php';
 
 
 
-        mysqli_query($conn,"INSERT INTO produtos (categoria, nome, preco_mercado, desconto, quantidade, descricao, img_frente, img_direita, img_esquerda, img_tras) VALUES ('$_POST[categoria]','$_POST[nome]','$_POST[preco]','$_POST[desconto]','$_POST[quantidade]','$_POST[descricao]','$img_path_frente','$img_path_direita','$img_path_esquerda','$img_path_tras')");
+        $as=mysqli_query($conn,"INSERT INTO produtos (categoria, nome, preco_mercado, desconto, quantidade, descricao, img_frente, img_direita, img_esquerda, img_tras) VALUES ('$_POST[categoria]','$_POST[nome]','$_POST[preco]','$_POST[desconto]','$_POST[quantidade]','$_POST[descricao]','$img_path_frente','$img_path_direita','$img_path_esquerda','$img_path_tras')");
     //    echo '<meta http-equiv="refresh" content"=0;url=funcionarios.php">';
+      if($as==true){
+      echo 'INSERIDO  SUCESSO';
+      }
 
         include '../ligacao/desconn.php';
     }
