@@ -1,6 +1,7 @@
 <?php
 //se usarmos o include o carrega o site á mesma, mesmo dando erro no php(funcao etc...)
- 
+include 'ligacao/conn.php';
+require_once 'funcoes/funcoes.php'; //chama as funcoes
 
  ?>
 
@@ -19,6 +20,7 @@
 </head>
 <body>
 
+
 <div class="super_container">
 
 	<!-- Header -->
@@ -30,6 +32,7 @@
 					<div class="col">
 						<div class="header_content d-flex flex-row align-items-center justify-content-start">
 							<div class="logo"><a href="#">Sublime.</a></div>
+
 							<nav class="main_nav">
 								<ul>
 									<li class="hassubs active">
@@ -54,9 +57,10 @@
 									</li>
 									<li><a href="#">Accessories</a></li>
 									<li><a href="#">Offers</a></li>
-									<li><a href="contact.html">Contact</a></li>
+									<li><a href="contact.html">Contact</a></li> <!--HEADER-->
 								</ul>
 							</nav>
+
 							<div class="header_extra ml-auto">
 								<div class="shopping_cart">
 									<a href="cart.html">
@@ -211,33 +215,94 @@
 				<!-- Get in touch -->
 				<div class="col-lg-8 contact_col">
 					<div class="get_in_touch">
-						<div class="section_title">Get in Touch</div>
-						<div class="section_subtitle">Say hello</div>
+						<div class="section_title">Contacte-nos</div>
+						<div class="section_subtitle">Diga-nos a sua opnião</div>
 						<div class="contact_form_container">
-							<form action="#" id="contact_form" class="contact_form">
-								<div class="row">
-									<div class="col-xl-6">
+
+							<form method="post">
+
+									<div>
 										<!-- Name -->
-										<label for="contact_name">First Name*</label>
-										<input type="text" id="contact_name" class="contact_input" required="required">
+										<label for="contact_name">Nome*</label>
+										<input type="text" name="nome" class="contact_input" required="required">
 									</div>
-									<div class="col-xl-6 last_name_col">
-										<!-- Last Name -->
-										<label for="contact_last_name">Last Name*</label>
-										<input type="text" id="contact_last_name" class="contact_input" required="required">
-									</div>
-								</div>
+
 								<div>
 									<!-- Subject -->
-									<label for="contact_company">Subject</label>
-									<input type="text" id="contact_company" class="contact_input">
+									<label for="contact_company">Assunto</label>
+									<input type="text" name="assunto" class="contact_input">
 								</div>
+
+                <div>
+                  <!-- Subject -->
+                  <label for="contact_company">Email*</label>
+                  <input type="email" name="email" class="contact_input" required="required">
+                </div>
+
 								<div>
-									<label for="contact_textarea">Message*</label>
-									<textarea id="contact_textarea" class="contact_input contact_textarea" required="required"></textarea>
+									<label for="contact_textarea">Mensagem*</label>
+									<textarea name="mensagem" class="contact_input contact_textarea" required="required"></textarea>
 								</div>
-								<button class="button contact_button"><span>Send Message</span></button>
+                <button type="submit" class="button contact_button" name="enviar"><span>Enviar Messagem</span></button>
 							</form>
+
+              <?php
+              if(isset($_POST["enviar"])){
+                include 'ligacao/conn.php';
+
+                    mysqli_query($conn,"INSERT INTO contacto (nome, assunto, email, mensagem) VALUES ('$_POST[nome]','$_POST[assunto]','$_POST[email]','$_POST[mensagem]')");
+                    echo '<meta http-equiv="refresh" content"=0;url=contact.php">';
+
+                    include 'ligacao/desconn.php';
+                }
+
+               ?>
+
+               <div class="modal" tabindex="-1" role="dialog">
+               <div class="modal-dialog" role="document">
+                 <div class="modal-content">
+                   <div class="modal-header">
+                     <h5 class="modal-title">Modal title</h5>
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                       <span aria-hidden="true">&times;</span>
+                     </button>
+                   </div>
+                   <div class="modal-body">
+                     <p>Modal body text goes here.</p>
+                   </div>
+                   <div class="modal-footer">
+                     <button type="button" class="btn btn-primary">Save changes</button>
+                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                   </div>
+                 </div>
+               </div>
+             </div>
+
+             <!-- Button trigger modal -->
+             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Submeter</button>
+
+             <!-- Modal -->
+
+             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+               <div class="modal-dialog" role="document">
+                 <div class="modal-content">
+                   <div class="modal-header">
+                     <h5 class="modal-title" id="exampleModalLabel">Confirmação</h5>
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                       <span aria-hidden="true">&times;</span>
+                     </button>
+                   </div>
+                   <div class="modal-body">
+                     Têm a certeza que pertende enviar a mensagem ?
+                   </div>
+                   <div class="modal-footer">
+                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                     <button type="submit" name="enviar" class="btn btn-primary">Enviar</button>
+                   </div>
+                 </div>
+               </div>
+             </div>
+
 						</div>
 					</div>
 				</div>
@@ -272,7 +337,7 @@
 			<div class="row map_row">
 				<div class="col">
 
-					<!-- Google Map -->
+					<!-- Google Map-->
 					<div class="map">
 						<div id="google_map" class="google_map">
 							<div class="map_container">

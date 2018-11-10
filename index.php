@@ -53,7 +53,7 @@
 										</ul>
 									</li>
 									<li><a href="#">Offers</a></li>
-									<li><a href="contact.html">Contact</a></li>
+									<li><a href="contact.php">Contact</a></li>
                   <li><a href="login.php">Login</a></li>
 								</ul>
 							</nav>
