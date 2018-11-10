@@ -24,36 +24,25 @@
 	include("header.php");
 	?>
 
-		<!--teste pc-->
-		<!--teste-->
-		<!-- Search Panel -->
-		<div class="search_panel trans_300">
-			<div class="container">
-				<div class="row">
-					<div class="col">
-						<div class="search_panel_content d-flex flex-row align-items-center justify-content-end">
-							<form action="#">
-								<input type="text" class="search_input" placeholder="Search" required="required">
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+	<script type="text/javascript">
+	$(document).ready(function){
 
-		<!-- Social -->
-		<div class="header_social">
-			<ul>
-				<li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-				<li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-				<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-				<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-			</ul>
-		</div>
-	</header>
+		document.getElementById("addcart").onclick = function () {
+				<?php
 
-	<!-- Menu -->
+				if ($_SESSION['id_registo']==null) {
+					$url_go_to="login.php";
+				}
+				else {
+					$url_go_to="cart.php";
+				}
+				?>
+				};
 
+	});
+</script>
+
+<!-- Menu -->
 	<div class="menu menu_mm trans_300">
 		<div class="menu_container menu_mm">
 			<div class="page_menu_content">
@@ -112,7 +101,7 @@
 					<div class="row">
 						<div class="col">
 							<div class="home_content">
-								<div class="home_title">Tecnologia<span>.</span></div>
+								<div class="home_title">Smart Phones<span>.</span></div>
 								<div class="home_text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a ultricies metus. Sed nec molestie eros. Sed viverra velit venenatis fermentum luctus.</p></div>
 							</div>
 						</div>
@@ -209,7 +198,7 @@
 													<div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fa fa-chevron-down" aria-hidden="true"></i></div>
 												</div>
 											</div>
-											<div class="button cart_button"><a href="#">Add to cart</a></div>
+											<div class="button cart_button"><a href="' . $url_go_to . '">Add to cart</a></div>
 										</div>
 
 										<!-- Share -->
@@ -337,6 +326,7 @@
 	<?php
 	include("footer.php");
 	?>
+</div>
 
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="styles/bootstrap4/popper.js"></script>
