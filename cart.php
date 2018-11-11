@@ -1,3 +1,31 @@
+<?php
+	include 'ligacao/conn.php';
+	require_once 'funcoes/funcoes.php';
+	session_start();
+	$dados = "SELECT produtos.nome,produtos.preco_mercado,registo.id_registo,carrinho.id_sessao,carrinho.id_produto,carrinho.quantidade,carrinho.portes,carrinho.compra,carrinho.email,carrinho.data from carrinho
+	inner join registo on registo.id_registo=carrinho.id_sessao
+	inner join produtos on produtos.id_produto=carrinho.id_produto
+	where carrinho.id_sessao='$_SESSION[id_registo]'"; /*and carrinho.compra like '0'*/
+//	$query_carrinho = $dados->fetch_assoc();
+
+	$query_carrinho = tabelafil($dados);
+
+	function tabelafil($dados)
+	{
+		include 'ligacao/conn.php';
+		$resultados_fil = mysqli_query($conn,$dados);
+		return $resultados_fil;
+
+	}
+
+	if(!$dados)
+	include 'ligacao/desconn.php';
+
+ ?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -114,6 +142,10 @@
 			<div class="row cart_items_row">
 				<div class="col">
 
+					<?php
+					$quantidade=1;
+					while ($emenu = mysqli_fetch_array($query_carrinho)) {
+					echo'
 					<!-- Cart Item -->
 					<div class="cart_item d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-start">
 						<!-- Name -->
@@ -122,18 +154,18 @@
 								<div><img src="images/cart_1.jpg" alt=""></div>
 							</div>
 							<div class="cart_item_name_container">
-								<div class="cart_item_name"><a href="#">Smart Phone Deluxe Edition</a></div>
+								<div class="cart_item_name"><a href="#">'.$emenu['nome'].'</a></div>
 								<div class="cart_item_edit"><a href="#">Edit Product</a></div>
 							</div>
 						</div>
 						<!-- Price -->
-						<div class="cart_item_price">$790.90</div>
+						<div class="cart_item_price">'.$emenu['preco_mercado'].'</div>
 						<!-- Quantity -->
 						<div class="cart_item_quantity">
 							<div class="product_quantity_container">
 								<div class="product_quantity clearfix">
 									<span>Qty</span>
-									<input id="quantity_input" type="text" pattern="[0-9]*" value="1">
+									<input id="quantity_input" type="text" pattern="[0-9]*" value="'.$quantidade.'">
 									<div class="quantity_buttons">
 										<div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fa fa-chevron-up" aria-hidden="true"></i></div>
 										<div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fa fa-chevron-down" aria-hidden="true"></i></div>
@@ -142,22 +174,43 @@
 							</div>
 						</div>
 						<!-- Total -->
-						<div class="cart_item_total">$790.90</div>
-					</div>
+						<div class="cart_item_total">'.$emenu['preco_mercado'].'</div>
+					</div>';
+				}?>
 
 				</div>
 			</div>
-			<div class="row row_cart_buttons">
+
+			<?php
+			include 'ligacao/conn.php';
+			$dados = (mysqli_query($conn,"SELECT id_carrinho, id_sessao, carrinho.id_produto, carrinho.quantidade, portes, compra, email, data, produtos.categoria FROM carrinho inner join produtos on produtos.id_produto=carrinho.id_produto WHERE  id_sessao='$_SESSION[id_registo]' order by id_carrinho DESC limit 1"));
+			$informacao = $dados->fetch_assoc();
+
+			echo'<div class="row row_cart_buttons">
 				<div class="col">
 					<div class="cart_buttons d-flex flex-lg-row flex-column align-items-start justify-content-start">
-						<div class="button continue_shopping_button"><a href="#">Continue shopping</a></div>
-						<div class="cart_buttons_right ml-lg-auto">
-							<div class="button clear_cart_button"><a href="#">Clear cart</a></div>
+						<div class="button continue_shopping_button"><a href="categories.php?Categoria='.$informacao['categoria'].'">Continuar a comprar</a></div>
+						<div class="cart_buttons_right ml-lg-auto">';
+						?>
+							 <div name="teste" class="button clear_cart_button"><a> Clear cart</a></div>
+
+								<?php
+								if (isset($_POST['teste'])) {
+								include 'ligacao/conn.php';
+
+								mysqli_query($conn,"DELETE FROM carrinho where id_sessao='$_SESSION[id_registo]' and compra like '0'"); //quando pagar fica 1
+								echo '<meta http-equiv="refresh" content"=0;url=cart.php">';
+								include 'ligacao/desconn.php';
+								}
+								?>
+
 							<div class="button update_cart_button"><a href="#">Update cart</a></div>
 						</div>
 					</div>
 				</div>
 			</div>
+
+
 			<div class="row row_extra">
 				<div class="col-lg-4">
 
