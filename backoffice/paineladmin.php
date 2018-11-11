@@ -64,6 +64,14 @@
                         <p class="description">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu.</p><a href="consulta_produtos.php" class="learn-more">Consultar Produtos »</a></div>
                 </div>
             </div>
+
+            <div class="col-sm-6 col-md-5 col-lg-4 item">
+              <div class="box"><a href="registos_lista.php" class="fa fa-money icon"></a>
+                <h3 class="name">Lista registos</h3>
+                <p class="description">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu.</p><a href="registos_lista.php" class="learn-more">Lista registos »</a></div>
+              </div>
+
+
         </div>
     </div>
     <main></main>

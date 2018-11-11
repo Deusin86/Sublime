@@ -222,11 +222,9 @@ include '../ligacao/conn.php';
 
 
 
-        $as=mysqli_query($conn,"INSERT INTO produtos (categoria, nome, preco_mercado, desconto, quantidade, descricao, img_frente, img_direita, img_esquerda, img_tras) VALUES ('$_POST[categoria]','$_POST[nome]','$_POST[preco]','$_POST[desconto]','$_POST[quantidade]','$_POST[descricao]','$img_path_frente','$img_path_direita','$img_path_esquerda','$img_path_tras')");
+        mysqli_query($conn,"INSERT INTO produtos (categoria, nome, preco_mercado, desconto, quantidade, descricao, img_frente, img_direita, img_esquerda, img_tras) VALUES ('$_POST[categoria]','$_POST[nome]','$_POST[preco]','$_POST[desconto]','$_POST[quantidade]','$_POST[descricao]','$img_path_frente','$img_path_direita','$img_path_esquerda','$img_path_tras')");
     //    echo '<meta http-equiv="refresh" content"=0;url=funcionarios.php">';
-      if($as==true){
-      echo 'INSERIDO  SUCESSO';
-      }
+
 
         include '../ligacao/desconn.php';
     }
