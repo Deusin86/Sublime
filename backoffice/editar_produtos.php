@@ -172,7 +172,7 @@
 
 
           //IMAGEM FRENTE
-          $img_path_frente="images/unknown.png";
+          $img_path_frente=$dados['img_frente'];
           if(isset($_FILES['image_frente'])){
             $file_name = $_FILES['image_frente']['name'];
             $file_size = $_FILES['image_frente']['size'];
@@ -199,7 +199,7 @@
 
 
             //IMAGEM DIREITA
-            $img_path_direita="images/unknown.png";
+            $img_path_direita=$dados['img_direita'];
             if(isset($_FILES['image_direita'])){
               $file_name = $_FILES['image_direita']['name'];
               $file_size = $_FILES['image_direita']['size'];
@@ -226,7 +226,7 @@
 
 
               //IMAGEM ESQUERDA
-              $img_path_esquerda="images/unknown.png";
+              $img_path_esquerda=$dados['img_esquerda'];
               if(isset($_FILES['image_esquerda'])){
                 $file_name = $_FILES['image_esquerda']['name'];
                 $file_size = $_FILES['image_esquerda']['size'];
@@ -253,7 +253,7 @@
 
 
                 //IMAGEM TRAS
-                $img_path_tras="images/unknown.png";
+                $img_path_tras=$dados['img_tras'];
                 if(isset($_FILES['image_tras'])){
                   $file_name = $_FILES['image_tras']['name'];
                   $file_size = $_FILES['image_tras']['size'];
@@ -280,8 +280,23 @@
 
 
 
-                  mysqli_query($conn, "UPDATE produtos SET categoria = '$_POST[categoria]', nome = '$_POST[nome]', preco_mercado = '$_POST[preco_mercado]', desconto = '$_POST[desconto]', quantidade = '$_POST[quantidade]', descricao = '$_POST[descricao]', img_frente = '$img_path_frente', img_direita = '$img_path_direita', img_esquerda = '$img_path_esquerda', img_tras ='$img_path_tras' WHERE id_produto='$idx'");
-        //  echo '<meta http-equiv="refresh" content"=0;url=consulta_produtos.php">';
+                  if($dados['nome']==$_POST['nome']){
+                    echo' <script type="text/javascript">
+
+                            alert("Ja existe!");
+
+                        </script>';
+                        echo '<meta http-equiv="refresh" content="0";>';
+                  }
+                  else{
+                    mysqli_query($conn, "UPDATE produtos SET categoria = '$_POST[categoria]', nome = '$_POST[nome]', preco_mercado = '$_POST[preco_mercado]', desconto = '$_POST[desconto]', quantidade = '$_POST[quantidade]', descricao = '$_POST[descricao]', img_frente = '$img_path_frente', img_direita = '$img_path_direita', img_esquerda = '$img_path_esquerda', img_tras ='$img_path_tras' WHERE id_produto='$idx'");
+                    echo' <script type="text/javascript">
+
+                            alert("Sucesso!");
+
+                        </script>';
+                        echo '<meta http-equiv="refresh" content="0";>';
+                 }
 
 
 
