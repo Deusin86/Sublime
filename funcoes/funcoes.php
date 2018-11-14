@@ -9,7 +9,7 @@ if(empty($email) || empty($password)){
   include 'ligacao/conn.php'; //ligacao a base de dados
 
   //Query aos logins existentes: //ATENÇÃO ALTERADO AQUI
-  $q = mysqli_query($conn,"SELECT id_registo, email, password, tipo
+  $q = mysqli_query($conn,"SELECT id_registo, email, password, tipo, nome
   FROM registo where email = '$email' AND password = '$password'");
 
   $a = mysqli_fetch_array($q); //array com os valores da variavel $q
@@ -25,6 +25,8 @@ if(empty($email) || empty($password)){
   $_SESSION["id_registo"] = $a["id_registo"];
 
   $_SESSION["tipo"] = $a["tipo"];
+
+  $_SESSION["nome"] = $a["nome"];
 
   $_SESSION["email"] = $a["email"];
 

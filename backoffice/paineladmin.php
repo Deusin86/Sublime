@@ -27,7 +27,7 @@
                   <ul class="nav navbar-nav mr-auto">
                     <li class="nav-item" role="presentation" style="font-size:26px;"><a class="nav-link active" style="height:56px;margin:211px;">Painel Admistrador</a></li>
                       <li class="nav-item" role="presentation"><a class="nav-link" href="#"></a></li>
-                </ul> Bem-Vindo <?php echo $_SESSION["username"];?> &nbsp <span class="navbar-text actions"> <a class="btn btn-light action-button" role="button" <?php echo 'href="terminarsessao.php">Sair'; ?> </a></span></div>
+                </ul> Bem-Vindo <?php echo $_SESSION["nome"];?> &nbsp <span class="navbar-text actions"> <a class="btn btn-light action-button" role="button" <?php echo 'href="terminarsessao.php">Sair'; ?> </a></span></div>
 
   </div>
   </nav>

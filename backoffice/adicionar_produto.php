@@ -235,7 +235,7 @@ include '../ligacao/conn.php';
     //    echo '<meta http-equiv="refresh" content"=0;url=funcionarios.php">';
                   echo' <script type="text/javascript">
 
-                    alert("Ja existe esse email!");
+                    alert("Gravado com sucesso");
 
                     </script>';
                     echo '<meta http-equiv="refresh" content="0";>';
