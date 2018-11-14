@@ -220,10 +220,28 @@ include '../ligacao/conn.php';
               }
             }
 
+              $dados = mysqli_fetch_array(mysqli_query($conn,"SELECT email FROM registo"));
 
+            if($dados['email']==$_POST['email']){
+              echo' <script type="text/javascript">
 
-        mysqli_query($conn,"INSERT INTO produtos (categoria, nome, preco_mercado, desconto, quantidade, descricao, img_frente, img_direita, img_esquerda, img_tras) VALUES ('$_POST[categoria]','$_POST[nome]','$_POST[preco]','$_POST[desconto]','$_POST[quantidade]','$_POST[descricao]','$img_path_frente','$img_path_direita','$img_path_esquerda','$img_path_tras')");
+                      alert("Ja existe esse email!");
+
+                  </script>';
+                  echo '<meta http-equiv="refresh" content="0";>';
+            }
+            else{
+                  mysqli_query($conn,"INSERT INTO produtos (categoria, nome, preco_mercado, desconto, quantidade, descricao, img_frente, img_direita, img_esquerda, img_tras) VALUES ('$_POST[categoria]','$_POST[nome]','$_POST[preco]','$_POST[desconto]','$_POST[quantidade]','$_POST[descricao]','$img_path_frente','$img_path_direita','$img_path_esquerda','$img_path_tras')");
     //    echo '<meta http-equiv="refresh" content"=0;url=funcionarios.php">';
+                  echo' <script type="text/javascript">
+
+                    alert("Ja existe esse email!");
+
+                    </script>';
+                    echo '<meta http-equiv="refresh" content="0";>';
+            }
+
+
 
 
         include '../ligacao/desconn.php';

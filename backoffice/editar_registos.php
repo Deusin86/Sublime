@@ -128,9 +128,32 @@
         $colunas = $querys->fetch_assoc();*/
 
         if (isset($_POST['editar'])) {
-          mysqli_query($conn, "UPDATE registo SET nome = '$_POST[nome]', apelido = '$_POST[apelido]', empresa = '$_POST[empresa]', pais = '$_POST[pais]', morada = '$_POST[morada]',
-            codigo_postal = '$_POST[codigo_postal]', cidade = '$_POST[cidade]', telefone = '$_POST[telefone]', email = '$_POST[email]', password ='$_POST[password]',
-            tipo_pagamento='$_POST[tipo_pagamento]' WHERE id_registo='$idx'");
+
+
+
+          if($dados['email']==$_POST['email']){
+            echo' <script type="text/javascript">
+
+                    alert("Ja existe!");
+
+                  </script>';
+            echo '<meta http-equiv="refresh" content="0";>';
+          }
+          else{
+
+                mysqli_query($conn, "UPDATE registo SET nome = '$_POST[nome]', apelido = '$_POST[apelido]', empresa = '$_POST[empresa]', pais = '$_POST[pais]', morada = '$_POST[morada]',
+                  codigo_postal = '$_POST[codigo_postal]', cidade = '$_POST[cidade]', telefone = '$_POST[telefone]', email = '$_POST[email]', password ='$_POST[password]',
+                  tipo_pagamento='$_POST[tipo_pagamento]' WHERE id_registo='$idx'");
+
+                  echo' <script type="text/javascript">
+
+                      alert("Sucesso!");
+
+                    </script>';
+                echo '<meta http-equiv="refresh" content="0";>';
+          }
+          
+
         //  echo '<meta http-equiv="refresh" content"=0;url=consulta_produtos.php">';
 
           include '../ligacao/desconn.php';
