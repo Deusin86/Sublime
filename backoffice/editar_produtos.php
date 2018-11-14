@@ -279,7 +279,9 @@
                   }
 
 
-
+                  if($dados['nome']==$_POST['nome']){
+                    /*METER UM POPUP*/
+                  }
                   mysqli_query($conn, "UPDATE produtos SET categoria = '$_POST[categoria]', nome = '$_POST[nome]', preco_mercado = '$_POST[preco_mercado]', desconto = '$_POST[desconto]', quantidade = '$_POST[quantidade]', descricao = '$_POST[descricao]', img_frente = '$img_path_frente', img_direita = '$img_path_direita', img_esquerda = '$img_path_esquerda', img_tras ='$img_path_tras' WHERE id_produto='$idx'");
         //  echo '<meta http-equiv="refresh" content"=0;url=consulta_produtos.php">';
 
